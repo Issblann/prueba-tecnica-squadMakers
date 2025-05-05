@@ -1,0 +1,27 @@
+# Node
+node_modules/
+dist/
+.env
+.env.*  # En caso de múltiples entornos como .env.dev, .env.prod
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Jest
+coverage/
+jest-cache/
+jest-test-results.json
+
+# Swagger generated files (if any)
+swagger-output.json
+
+# VSCode
+.vscode/
