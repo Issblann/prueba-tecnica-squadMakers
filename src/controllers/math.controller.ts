@@ -12,11 +12,14 @@ export class MathController {
             }
 
             const parsedNumbers = numbers.split(',').map((n: string) => {
-                const num = parseInt(n.trim(), 10);
-                if (isNaN(num)) {
+                const trimmedValue = n.trim();
+                const regex = /^-?\d+$/; // Expresión regular para enteros
+
+                if (!regex.test(trimmedValue)) {
                     throw new Error('All elements must be valid integers.');
                 }
-                return num;
+
+                return parseInt(trimmedValue, 10); // Convertimos el valor a número entero
             });
             const result = this.service.getLCM(parsedNumbers);
             res.status(200).json({ result });
