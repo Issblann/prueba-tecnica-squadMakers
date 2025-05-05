@@ -1,0 +1,173 @@
+openapi: 3.0.0
+info:
+  title: Jokes and Math Microservice
+  version: 1.0.0
+  description: REST API to manage jokes and mathematical operations.
+
+paths:
+  # Sección de Jokes
+  /api/jokes/joke/{type}:
+    get:
+      summary: Get a joke by type
+      description: Returns a joke of a specific type.
+      tags:
+        - Jokes 
+      parameters:
+        - name: type
+          in: path
+          required: false
+          description: The type of joke (e.g., "chuck").
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '400':
+          description: Invalid joke type.
+
+  /api/jokes/joke:
+    get:
+      summary: Get a random joke
+      description: Returns a random joke.
+      tags:
+        - Jokes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        '400':
+          description: Error retrieving joke.
+
+    post:
+      summary: Create a new joke
+      description: Saves a new joke to the database.
+      tags:
+        - Jokes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                joke:
+                  type: string
+                type:
+                  type: string
+      responses:
+        '201':
+          description: Joke created successfully.
+        '400':
+          description: Bad request.
+
+  /api/jokes/joke/{id}:
+    put:
+      summary: Update a joke
+      description: Updates an existing joke by its ID.
+      tags:
+        - Jokes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the joke to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                joke:
+                  type: string
+                type:
+                  type: string
+      responses:
+        '200':
+          description: Joke updated successfully.
+        '400':
+          description: Error updating joke.
+        '404':
+          description: Joke not found.
+
+    delete:
+      summary: Delete a joke
+      description: Deletes a joke by its ID.
+      tags:
+        - Jokes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the joke to delete.
+      responses:
+        '204':
+          description: Joke deleted successfully.
+        '404':
+          description: Joke not found.
+
+  # Sección de Math
+  /api/math/lcm:
+    get:
+      summary: Calculate the Least Common Multiple (LCM)
+      description: Returns the LCM of two numbers.
+      tags:
+        - Math
+      parameters:
+        - name: numbers
+          in: query
+          required: true
+          description: Comma-separated numbers for LCM calculation (e.g., "12,15").
+          schema:
+            type: string
+      responses:
+        '200':
+          description: LCM calculated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lcm:
+                    type: integer
+        '400':
+          description: Invalid parameters. Make sure to provide two valid integers.
+
+  /api/math/plusone:
+    get:
+      summary: Increment a number by one
+      description: Returns the number incremented by one.
+      tags:
+        - Math  # Agrupamos esta ruta en la sección "Math"
+      parameters:
+        - name: number
+          in: query
+          required: true
+          description: The number to increment.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Number incremented successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  incremented:
+                    type: integer
+        '400':
+          description: Invalid parameter.
